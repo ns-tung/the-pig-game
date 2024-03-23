@@ -5,10 +5,12 @@ const dice = document.querySelector('.dice');
 const rollBtn = document.querySelector('.btn-roll');
 const holdBtn = document.querySelector('.btn-hold');
 const resetBtn = document.querySelector('.btn-reset');
-const scoresHold0 = document.getElementById('scoresHold-0');
-const scoresHold1 = document.getElementById('scoresHold-1');
-const scoresArchive0 = document.getElementById('scoresArchive-0');
-const scoresArchive1 = document.getElementById('scoresArchive-1');
+const player0 = document.querySelector('.player-0');
+const player1 = document.querySelector('.player-1');
+
+const displayText = function (selector, message) {
+  return document.getElementById(selector).textContent = message;
+}
 
 const random = function () { return Math.trunc(Math.random() * 6) + 1 };
 
@@ -16,6 +18,9 @@ const random = function () { return Math.trunc(Math.random() * 6) + 1 };
 const randomDice = function () {
   rollDice(random());
 }
+
+let activePlayer = 0;
+let scoresArchive = 0;
 
 // Rolling dice functionality
 const rollDice = function (rolledDice) {
@@ -55,8 +60,28 @@ const rollDice = function (rolledDice) {
 
     dice.style.animation = 'none';
 
+    // Check for rolled 1
+    let activeSelector = `scoresArchive-${activePlayer}`;
+
+    if (rolledDice !== 1) {
+      scoresArchive += rolledDice;
+      displayText(activeSelector, scoresArchive);
+      // Switches player
+    } else {
+      scoresArchive = 0;
+      displayText(activeSelector, scoresArchive);
+      player0.classList.toggle('_active');
+      player1.classList.toggle('_active');
+      activePlayer = activePlayer === 0 ? 1 : 0;
+    }
+
+    rollBtn.classList.toggle('disabled');
+
   }, 1550);
 
 }
 
-rollBtn.addEventListener('click', randomDice);
+rollBtn.addEventListener('click', function () {
+  rollBtn.classList.toggle('disabled');
+  randomDice();
+});
