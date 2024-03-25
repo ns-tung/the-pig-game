@@ -165,13 +165,17 @@ main {
   pointer-events: none;
 }
 
-.player-winner {
-  background-color: #2f2f2f;
+._winner .name {
+  font-weight: 700;
+  color: #3c783c;
 }
 
-.player-winner .name {
-  font-weight: 700;
-  color: #c7365f;
+._winner .score {
+  color: #148c14;
+}
+
+._winner .current {
+  background-color: #148c14;
 }
 
 /* DICE STYLES */
