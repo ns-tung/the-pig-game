@@ -10,12 +10,6 @@
   -webkit-user-select: none !important;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -68,7 +62,8 @@ main {
   margin-bottom: 1rem;
 }
 
-.score {
+.score,
+.trophy {
   font-size: 8rem;
   font-weight: 300;
   color: #c7365f;

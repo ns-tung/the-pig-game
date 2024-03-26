@@ -13,12 +13,25 @@ const queryNode = function (node) {
   return document.querySelector(node);
 }
 
+const toggleClass = function (node, className) {
+  return node.classList.toggle(className);
+}
+
+const removeClass = function (node, className) {
+  return node.classList.remove(className);
+}
+
+const displayText = function (node, message) {
+  return queryNode(node).textContent = message;
+}
+
+let scores = [0, 0];
+let trophy = false;
 let activePlayer = 0;
 let scoresArchive = 0;
 let scoresSelector = `#scoresHold-${activePlayer}`;
 let archiveSelector = `#scoresArchive-${activePlayer}`;
 
-const scores = [0, 0];
 const dice = queryNode('.dice');
 const rollBtn = queryNode('.btn-roll');
 const holdBtn = queryNode('.btn-hold');
@@ -26,13 +39,33 @@ const resetBtn = queryNode('.btn-reset');
 const player0 = queryNode('.player-0');
 const player1 = queryNode('.player-1');
 
-const toggleClass = function (node, className) {
-  node.classList.toggle(className);
+const initGames = function () {
+  removeClass(rollBtn, 'disabled');
+  removeClass(holdBtn, 'disabled');
+  scores = [0, 0];
+  scoresArchive = 0;
+  if (activePlayer === 0) {
+    removeClass(player0, '_winner');
+  } else {
+    activePlayer = 0;
+    removeClass(player1, '_winner');
+    removeClass(player1, '_active');
+    scoresSelector = `#scoresHold-${activePlayer}`;
+    archiveSelector = `#scoresArchive-${activePlayer}`;
+  }
+  if (trophy) {
+    queryNode('.trophy').remove();
+    trophy = false;
+  }
+  dice.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  player0.classList.add('_active');
+  displayText('#scoresHold-0', 0);
+  displayText('#scoresHold-1', 0);
+  displayText('#scoresArchive-0', 0);
+  displayText('#scoresArchive-1', 0);
 }
 
-const displayText = function (node, message) {
-  return queryNode(node).textContent = message;
-}
+initGames();
 
 const insertAfter = function (refNode, newNode) {
   return refNode.parentNode.insertBefore(newNode, refNode.nextSibling);
@@ -114,13 +147,15 @@ holdBtn.addEventListener('click', function () {
     displayText(archiveSelector, scoresArchive);
     toggleClass(rollBtn, 'disabled');
     toggleClass(holdBtn, 'disabled');
+    trophy = true;
     const trophyNode = document.createElement('p');
-    trophyNode.classList.add('score');
+    trophyNode.classList.add('trophy');
     trophyNode.innerHTML = '🏆';
     const scoresNode = queryNode(scoresSelector);
     insertAfter(scoresNode, trophyNode);
     const winnerNode = queryNode(`.player-${activePlayer}`);
     toggleClass(winnerNode, '_winner');
-    dice.style.transform = 'rotateX(0deg) rotateY(0deg)';
   } else { switchPlayer(); }
 });
+
+resetBtn.addEventListener('click', initGames);
