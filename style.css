@@ -20,25 +20,56 @@ body {
   font-weight: 500;
   height: 100vh;
   color: #333;
-  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  /* background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%); */
+  background: url(https://images.unsplash.com/photo-1542273917363-3b1817f69a2d)
+    no-repeat center center;
+  background-size: cover;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 /* LAYOUT */
 
+h1 {
+  margin-bottom: 4rem;
+  font-size: 10rem;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
 main {
   position: relative;
   width: 100rem;
   height: 60rem;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
-  filter: blur();
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   overflow: hidden;
   display: flex;
+}
+
+.winning {
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.winning .wins {
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  background-image: linear-gradient(to bottom right, #ff5722, #e21d60);
 }
 
 .player {
@@ -66,18 +97,18 @@ main {
 .trophy {
   font-size: 8rem;
   font-weight: 300;
-  color: #c7365f;
+  color: #e21d60;
   margin-bottom: auto;
 }
 
 .player._active {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .player._active .name {
   font-weight: 700;
 }
 .player._active .score {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .player._active .current {
@@ -85,11 +116,10 @@ main {
 }
 
 .current {
-  background-color: #c7365f;
-  opacity: 0.8;
-  border-radius: 9px;
+  background-color: #e21d60;
+  border-radius: 10px;
   color: #fff;
-  width: 65%;
+  width: 50%;
   padding: 2rem;
   text-align: center;
   transition: all 0.75s;
@@ -160,17 +190,12 @@ main {
   pointer-events: none;
 }
 
-._winner .name {
-  font-weight: 700;
-  color: #3c783c;
-}
-
 ._winner .score {
-  color: #148c14;
+  color: #138813;
 }
 
 ._winner .current {
-  background-color: #148c14;
+  background-color: #138813;
 }
 
 /* DICE STYLES */
@@ -182,6 +207,10 @@ main {
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
+  padding: 6rem;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 40px #ccc;
 }
 
 .dice {
@@ -282,4 +311,50 @@ main {
 .left::after {
   margin: -35px 0 0 -35px;
   box-shadow: 25px 25px, 50px 50px;
+}
+
+.text {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-dasharray: 40 180;
+  stroke-dashoffset: 0;
+  -webkit-animation: stroke 6s infinite linear;
+  animation: stroke 6s infinite linear;
+}
+.text:nth-child(5n + 1) {
+  stroke: #f2385a;
+  -webkit-animation-delay: -1.2s;
+  animation-delay: -1.2s;
+}
+.text:nth-child(5n + 2) {
+  stroke: #f5a503;
+  -webkit-animation-delay: -2.4s;
+  animation-delay: -2.4s;
+}
+.text:nth-child(5n + 3) {
+  stroke: #e9f1df;
+  -webkit-animation-delay: -3.6s;
+  animation-delay: -3.6s;
+}
+.text:nth-child(5n + 4) {
+  stroke: #56d9cd;
+  -webkit-animation-delay: -4.8s;
+  animation-delay: -4.8s;
+}
+.text:nth-child(5n + 5) {
+  stroke: #3aa1bf;
+  -webkit-animation-delay: -6s;
+  animation-delay: -6s;
+}
+
+@-webkit-keyframes stroke {
+  100% {
+    stroke-dashoffset: -220;
+  }
+}
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: -220;
+  }
 }

@@ -12,6 +12,25 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- <h1>The Pig Game</h1> -->
+    <h1>
+      <a href="/">
+        <svg viewBox="0 0 900 120">
+          <!-- Symbol-->
+          <symbol id="s-text">
+            <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+              The Pig Game
+            </text>
+          </symbol>
+          <!-- Duplicate symbols-->
+          <use class="text" xlink:href="#s-text"></use>
+          <use class="text" xlink:href="#s-text"></use>
+          <use class="text" xlink:href="#s-text"></use>
+          <use class="text" xlink:href="#s-text"></use>
+          <use class="text" xlink:href="#s-text"></use>
+        </svg>
+      </a>
+    </h1>
     <main>
       <section class="player player-0 _active">
         <h2 class="name" id="name-0">Player 1</h2>
@@ -40,6 +59,7 @@
           <div class="face left"></div>
         </div>
       </div>
+      <div class="winning"><span class="wins">40</span></div>
       <button class="btn btn-reset">🔄 New game</button>
       <button class="btn btn-roll">🎲 Roll dice</button>
       <button class="btn btn-hold">📥 Hold</button>

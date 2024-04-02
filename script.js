@@ -39,6 +39,17 @@ const resetBtn = queryNode('.btn-reset');
 const player0 = queryNode('.player-0');
 const player1 = queryNode('.player-1');
 
+const winningScore = function () {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  if (urlParams.get('wins') && Number(urlParams.get('wins')) >= 9) {
+    return Number(urlParams.get('wins'));
+  } else {
+    window.location = '/?wins=99';
+    return 99;
+  }
+}
+
 const initGames = function () {
   removeClass(rollBtn, 'disabled');
   removeClass(holdBtn, 'disabled');
@@ -59,6 +70,9 @@ const initGames = function () {
   }
   dice.style.transform = 'rotateX(0deg) rotateY(0deg)';
   player0.classList.add('_active');
+  displayText('.wins', winningScore());
+  displayText('#name-0', 'Player 1');
+  displayText('#name-1', 'Player 2');
   displayText('#scoresHold-0', 0);
   displayText('#scoresHold-1', 0);
   displayText('#scoresArchive-0', 0);
@@ -128,6 +142,7 @@ const rollDice = function (rolledDice) {
 
     toggleClass(rollBtn, 'disabled');
     toggleClass(holdBtn, 'disabled');
+    toggleClass(resetBtn, 'disabled');
 
   }, 1550);
 
@@ -136,15 +151,17 @@ const rollDice = function (rolledDice) {
 rollBtn.addEventListener('click', function () {
   toggleClass(rollBtn, 'disabled');
   toggleClass(holdBtn, 'disabled');
+  toggleClass(resetBtn, 'disabled');
   randomDice();
 });
 
 holdBtn.addEventListener('click', function () {
   scores[activePlayer] += scoresArchive;
   displayText(scoresSelector, scores[activePlayer]);
-  if (scores[activePlayer] >= 100) {
+  if (scores[activePlayer] >= winningScore()) {
     scoresArchive = 0;
     displayText(archiveSelector, scoresArchive);
+    displayText(`#name-${activePlayer}`, 'Winner!');
     toggleClass(rollBtn, 'disabled');
     toggleClass(holdBtn, 'disabled');
     trophy = true;
